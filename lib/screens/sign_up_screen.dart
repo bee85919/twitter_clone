@@ -11,6 +11,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   bool _isEmailValid = false; // 이메일 유효성 상태 추적
 
   void _onEmailChanged() {
@@ -30,6 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void dispose() {
     _emailController.removeListener(_onEmailChanged);
     _emailController.dispose();
+    _nameController.dispose(); // 이름 컨트롤러 정리
     super.dispose();
   }
 
@@ -72,30 +74,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void _navigateToAgreementScreen() {
-    // 이메일이 유효하고, 생년월일이 오늘 날짜보다 이전인지 검사합니다.
-    if (_isEmailValid && selectedDate.isBefore(DateTime.now())) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const AgreementScreen(), // 다음 화면으로 이동
-        ),
-      );
-    } else {
-      // 에러 처리를 여기에 구현합니다.
-      // 예: 사용자에게 유효하지 않은 이메일이나 생년월일을 수정하라는 알림을 표시할 수 있습니다.
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Please enter a valid email and date of birth.'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () => Navigator.of(context).pop(), // 대화 상자를 닫습니다.
-            ),
-          ],
-        ),
-      );
+  bool _fromAgreementScreen = false; // AgreementScreen으로부터 돌아왔는지 여부를 추적하는 변수
+
+  void _navigateToAgreementScreen() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AgreementScreen(),
+      ),
+    );
+
+    if (result != null && result == true) {
+      setState(() {
+        _fromAgreementScreen = true; // AgreementScreen으로부터 돌아왔음을 나타냄
+      });
     }
   }
 
@@ -121,8 +113,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: _nameController, // 이름 입력 필드에 컨트롤러 할당
+                decoration: const InputDecoration(
                   labelText: 'Name',
                   border: UnderlineInputBorder(),
                 ),
@@ -163,9 +156,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _navigateToAgreementScreen,
-                  child: const Text('Next'),
+                  child: Text(_fromAgreementScreen
+                      ? 'Sign up'
+                      : 'Next'), // 버튼 텍스트를 조건에 따라 변경
                 ),
-              ),
+              )
             ],
           ),
         ),
