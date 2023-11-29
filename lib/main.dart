@@ -1,23 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:twitter_clone/constants/sizes.dart';
+import 'package:twitter_clone/screens/main_screen.dart';
+
 
 void main() {
-  runApp(MyApp());
+  runApp(const TwitterClone());
 }
 
-class MyApp extends StatelessWidget {
+
+class TwitterClone extends StatelessWidget {
+  const TwitterClone({super.key});
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Twitter Logo'),
-          leading: SvgPicture.asset('assets/svgs/twitter_logo.svg'),
-        ),
-        body: Center(
-          child: Text('Welcome to Twitter!'),
+      title: 'TikTok Clone',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: Colors.blue,
+        appBarTheme: const AppBarTheme(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: Sizes.size16 + Sizes.size2,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
+      home: const MainScreen(),
     );
   }
 }
+
