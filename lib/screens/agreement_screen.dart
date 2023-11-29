@@ -10,6 +10,12 @@ class AgreementScreen extends StatefulWidget {
 class _AgreementScreenState extends State<AgreementScreen> {
   bool _isSwitched = false;
 
+  void _onSignUpPressed() {
+    if (_isSwitched) {
+      Navigator.pop(context, true); // true 값을 결과로 전달하며 돌아감
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,14 +71,10 @@ class _AgreementScreenState extends State<AgreementScreen> {
             const SizedBox(height: 25),
             Center(
               child: SizedBox(
-                width: 325, // 버튼의 너비를 325로 설정
+                width: 325,
                 child: ElevatedButton(
-                  onPressed: _isSwitched
-                      ? () {
-                          // 'Next' 버튼을 누를 때 수행할 작업을 추가하세요.
-                        }
-                      : null, // _isSwitched가 false이면 버튼을 비활성화합니다.
-                  child: const Text('Next'),
+                  onPressed: _isSwitched ? _onSignUpPressed : null,
+                  child: const Text('Sign up'),
                 ),
               ),
             ),
