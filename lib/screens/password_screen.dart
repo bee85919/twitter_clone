@@ -9,9 +9,25 @@ class PasswordScreen extends StatefulWidget {
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isPasswordValid = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordController.addListener(_checkPasswordValid);
+  }
+
+  void _checkPasswordValid() {
+    final passwordLength = _passwordController.text.length;
+    if (passwordLength >= 8 && !_isPasswordValid) {
+      setState(() => _isPasswordValid = true);
+    } else if (passwordLength < 8 && _isPasswordValid) {
+      setState(() => _isPasswordValid = false);
+    }
+  }
 
   @override
   void dispose() {
@@ -99,21 +115,21 @@ class _PasswordScreenState extends State<PasswordScreen> {
         padding: const EdgeInsets.all(28),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 50),
+            minimumSize: const Size(double.infinity, 50), shape: const StadiumBorder(),
           ),
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const InterestsScreen(),
-                ),
-              );
-            }
-          },
+          onPressed: _isPasswordValid && _formKey.currentState!.validate()
+              ? () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InterestsScreen(),
+                    ),
+                  );
+                }
+              : null,
           child: const Text('Next'),
         ),
       ),
-    );
+    )
   }
 }

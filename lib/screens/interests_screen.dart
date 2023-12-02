@@ -137,8 +137,9 @@ class _InterestsScreenState extends State<InterestsScreen> {
       ),
       bottomNavigationBar: BottomAppBar(
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(16),
           child: ElevatedButton(
+            style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
             onPressed: _selectedInterests.length >= 3 ? _onNextTap : null,
             child: const Text('Next', style: TextStyle(fontSize: 16)),
           ),

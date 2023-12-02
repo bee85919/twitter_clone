@@ -117,6 +117,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 50),
+            shape: const StadiumBorder(),
           ),
           onPressed: _isButtonActive
               ? () {
