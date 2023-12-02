@@ -139,7 +139,10 @@ class _InterestsScreenState extends State<InterestsScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
-            style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 50),
+              shape: const StadiumBorder(),
+            ),
             onPressed: _selectedInterests.length >= 3 ? _onNextTap : null,
             child: const Text('Next', style: TextStyle(fontSize: 16)),
           ),
