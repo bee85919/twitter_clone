@@ -1,33 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/constants/sizes.dart';
-import 'package:twitter_clone/screens/main_screen.dart';
+import 'package:twitter_clone/screens/verification_screen.dart';
 
 void main() {
-  runApp(const TwitterClone());
+  runApp(const MyApp());
 }
 
-class TwitterClone extends StatelessWidget {
-  const TwitterClone({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TikTok Clone',
+      title: 'Twitter clone',
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: Sizes.size16 + Sizes.size2,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        primaryColor: Colors.black,
       ),
-      home: const MainScreen(),
+      home: const VerificationScreen(),
     );
   }
 }
