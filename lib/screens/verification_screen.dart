@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/screens/password_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -112,15 +113,18 @@ class _VerificationScreenState extends State<VerificationScreen> {
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(28), // 바닥과의 간격
+        padding: const EdgeInsets.all(28),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 50), // 버튼의 최소 크기를 설정
-            // 이 부분에서 필요에 따라 추가적인 스타일링을 할 수 있습니다.
+            minimumSize: const Size(double.infinity, 50),
           ),
           onPressed: _isButtonActive
               ? () {
-                  // TODO: Implement navigation to next screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PasswordScreen()),
+                  );
                 }
               : null,
           child: const Text('Next'),
