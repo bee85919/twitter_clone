@@ -115,7 +115,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
         padding: const EdgeInsets.all(28),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 50), shape: const StadiumBorder(),
+            minimumSize: const Size(double.infinity, 50),
+            shape: const StadiumBorder(),
           ),
           onPressed: _isPasswordValid && _formKey.currentState!.validate()
               ? () {
@@ -130,6 +131,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
           child: const Text('Next'),
         ),
       ),
-    )
+    );
   }
 }
