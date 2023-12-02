@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/screens/interests_screen.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
@@ -10,6 +11,7 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreenState extends State<PasswordScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -39,52 +41,57 @@ class _PasswordScreenState extends State<PasswordScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0), // 좌우 여백을 추가합니다.
-              child: Text(
-                'You\'ll need a password',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 16.0), // 좌우 여백을 추가합니다.
+                child: Text(
+                  'You\'ll need a password',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0), // 좌우 여백을 추가합니다.
-              child: Text(
-                'Make sure it\'s 8 characters or more.',
-                style: TextStyle(fontSize: 18),
+              const SizedBox(height: 20),
+              const Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 16.0), // 좌우 여백을 추가합니다.
+                child: Text(
+                  'Make sure it\'s 8 characters or more.',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
-            ),
-            const SizedBox(height: 28),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0), // 좌우 패딩을 추가
-              child: TextFormField(
-                  controller: _passwordController,
-                  obscureText: !_isPasswordVisible, // 비밀번호 숨김 여부
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        // 비밀번호 가시성 아이콘 설정
-                        _isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+              const SizedBox(height: 28),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0), // 좌우 패딩을 추가
+                child: TextFormField(
+                    controller: _passwordController,
+                    obscureText: !_isPasswordVisible, // 비밀번호 숨김 여부
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // 비밀번호 가시성 아이콘 설정
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: _togglePasswordVisibility,
                       ),
-                      onPressed: _togglePasswordVisibility,
                     ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty || value.length < 8) {
-                      return 'Please enter a password with 8 characters or more.';
-                    }
-                    return null;
-                  }),
-            ),
-            // 다른 위젯들...
-          ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty || value.length < 8) {
+                        return 'Please enter a password with 8 characters or more.';
+                      }
+                      return null;
+                    }),
+              ),
+              // 다른 위젯들...
+            ],
+          ),
         ),
       ),
       // 하단 버튼
@@ -95,7 +102,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
             minimumSize: const Size(double.infinity, 50),
           ),
           onPressed: () {
-            // TODO: Implement navigation to next screen
+            if (_formKey.currentState!.validate()) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const InterestsScreen(),
+                ),
+              );
+            }
           },
           child: const Text('Next'),
         ),
